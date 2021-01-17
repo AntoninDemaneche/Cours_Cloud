@@ -1,0 +1,11 @@
+FROM alpine:latest
+
+RUN apk add --no-cache python3 
+
+EXPOSE  8888
+
+WORKDIR /web/
+COPY ./http/ /web/
+
+CMD python3 -m http.server 8888
+

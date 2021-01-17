@@ -223,8 +223,7 @@ docker run -p 80:8888 alpython
 ```
 
 * Résultas : 
-
-(copier image)
+![alt text](https://github.com/AntoninDemaneche/Cours_Cloud/blob/main/Clous_Tp_I/Brouillon/Screenshot_1.png/) 
 ```
 ```
 

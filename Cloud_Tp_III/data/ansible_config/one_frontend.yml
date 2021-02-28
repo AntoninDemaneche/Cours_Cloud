@@ -1,0 +1,8 @@
+---
+- hosts: one-frontend.tp3
+  user: root
+  roles:
+    - iptables
+    - { role: yumrepos, repos: [epel, opennebula]}
+    - one_core
+    - one_sunstone

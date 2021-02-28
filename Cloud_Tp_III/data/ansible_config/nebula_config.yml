@@ -1,0 +1,83 @@
+---
+- name: Install opennebula
+  hosts: frontend
+  become: true
+  tasks: 
+  - name: Install ruby
+      yum:
+        name: ruby
+        state: present
+  - name : Copy Fichier
+      template:
+        src: 
+        dest: 
+  - name: Install Epel-Release
+      yum:
+        name: epel-release
+        state: present
+  - name: Install opennebula-server
+      yum:
+        name: opennebula-server
+        state: present
+  - name: Install opennebula-sunstone
+      yum:
+        name: opennebula-sunstone
+        state: present
+  - name: Install opennebula-ruby
+      yum:
+        name: opennebula-ruby
+        state: present
+  - name: Install opennebula-gate
+      yum:
+        name: opennebula-gate
+        state: present
+  - name: Install opennebula-flow
+      yum:
+        name: opennebula-flow
+        state: present
+  - name: Install libsqlite3x-devel.x86_64
+      yum:
+        name: libsqlite3x-devel.x86_64
+        state: present 
+  - name: Install mariadb-devel
+      yum:
+        name: mariadb-devel
+        state: present
+  - name: Install postgresql-server
+      yum:
+        name: postgresql-server
+        state: present 
+  - name: Install postgresql-contrib
+      yum:
+        name: postgresql-contrib
+        state: present
+  - name: Install postgresql-devel
+      yum:
+        name: postgresql-devel
+        state: present
+  - name: Install libcurl-devel
+      yum:
+        name: libcurl-devel
+        state: present
+  - name: Install libxml2
+        yum:
+          name: libxml2
+          state: present
+  - name: Install ruby-devel
+        yum:
+          name: ruby-devel
+          state: present
+  - name: Install gcc
+        yum:
+          name: gcc
+          state: present
+  - name: Install gcc-c++
+        yum:
+          name: gcc-c++
+          state: present
+
+
+        
+
+
+    

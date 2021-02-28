@@ -1,0 +1,46 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.define "frontend.tp3" do |frontend|
+    frontend.vm.box = "generic/centos7"
+    
+    frontend.vm.provider "virtualbox" do |vb|
+      vb.memory = "2072"
+      vb.cpus = "1"
+      vb.name = "frontend.tp3"
+    end
+
+    frontend.vm.network "private_network", ip: "10.100.100.11", bridge: "vboxnet3"
+    frontend.vm.network "private_network", ip: "10.110.110.11", bridge: "vboxnet4"
+    frontend.vm.hostname = "frontend.tp3"
+    frontend.vm.network "forwarded_port", guest: 9869, host: 9869, protocol: "tcp"
+    frontend.vm.synced_folder "./data", "/data"
+    frontend.vm.provision "shell", inline: "cp /data/ifcfg-virbr0-frontend /etc/sysconfig/network-scripts/ifcfg-virbr0"
+    frontend.vm.provision "shell", inline: "cp /data/ifcfg-virbr1-frontend /etc/sysconfig/network-scripts/ifcfg-virbr1"
+    frontend.vm.provision "shell", path: "setup.script"
+    frontend.vm.provision "shell", path: "nebula.script"
+
+    frontend.vm.provision "shell", inline: "cp -r /data/ssh_frontend/ /var/lib/one/.ssh && chown oneadmin:oneadmin /var/lib/one/.ssh/*"
+  end
+
+  config.vm.define "kvm1.tp3" do |kvm1|
+    kvm1.vm.box = "generic/centos7"
+    kvm1.vm.provider "virtualbox" do |vb|
+      vb.memory = "2072"
+      vb.cpus = "2"
+      vb.name = "kvm1.tp3"
+    end
+    kvm1.vm.network "private_network", ip: "10.100.100.12", bridge: "vboxnet3"
+    kvm1.vm.network "private_network", ip: "10.110.110.12", bridge: "vboxnet4"
+    kvm1.vm.hostname = "kvm1.tp3"
+    kvm1.vm.provision "shell", inline: "cp /data/ifcfg-virbr0-kvm1 /etc/sysconfig/network-scripts/ifcfg-virbr0"
+    kvm1.vm.provision "shell", inline: "cp /data/ifcfg-virbr1-kvm1 /etc/sysconfig/network-scripts/ifcfg-virbr1"
+    kvm1.vm.synced_folder "./data", "/data"
+    kvm1.vm.provision "shell", path: "setup.script"
+    kvm1.vm.provision "shell", path: "kvm_node.script"
+    kvm1.vm.provision "shell", inline: "cp -r /data/ssh_kvm1/* /var/lib/one/.ssh/. && chown oneadmin:oneadmin /var/lib/one/.ssh/"
+  end
+end
+

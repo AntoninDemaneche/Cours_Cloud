@@ -1,0 +1,38 @@
+yum install -y qemu-kvm libvirt libvirt-python libguestfs-tools virt-install
+systemctl enable libvirtd
+systemctl start libvirtd
+yum install -y ruby
+echo '### Installation de opennebula ###'
+cat << "EOT" > /etc/yum.repos.d/opennebula.repo
+[opennebula]
+name=OpenNebula Community Edition
+baseurl=https://downloads.opennebula.io/repo/5.12/CentOS/7/$basearch
+enabled=1
+gpgkey=https://downloads.opennebula.io/repo/repo.key
+gpgcheck=1
+repo_gpgcheck=1
+EOT
+yum makecache -y fast
+yum install -y epel-release
+subscription-manager repos --enable rhel-7-server-optional-rpms
+subscription-manager repos --enable rhel-7-server-extras-rpms
+rpm -ivh -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+yum install -y opennebula-node-kvm
+systemctl restart libvirtd
+yum install centos-release-qemu-ev
+yum install qemu-kvm-ev
+echo '### Opennebula installé ###'
+sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
+systemctl restart sshd
+useradd --shell /bin/bash oneadmin --home /var/lib/one
+usermod -aG wheel oneadmin
+usermod -p $(openssl passwd oneadmin) oneadmin
+echo 'oneadmin ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+su - oneadmin
+ssh-keygen -q -f /var/lib/one/.ssh/id_rsa
+chown oneadmin:oneadmin .ssh/id_rsa*
+
+
+
+
+exit

@@ -1,0 +1,4 @@
+10.100.100.11 management.frontend.tp3
+10.110.110.11 vm.frontend.tp3
+10.100.100.12 management.kvm1.tp3
+10.110.110.12 vm.kvm1.tp3

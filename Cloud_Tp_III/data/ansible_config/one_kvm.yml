@@ -1,0 +1,6 @@
+- hosts: kvm.tp3
+  user: root
+  roles:
+    - iptables
+    - { role: yumrepos, repos: [opennebula]}
+    - one_kvm.tp3

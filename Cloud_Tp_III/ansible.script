@@ -1,0 +1,12 @@
+yum install -y python3
+
+yum install ansible -y
+
+sudo yum install opennebula-provision
+
+- hosts: kvmnodes
+  user: root
+  roles:
+    - iptables
+    - { role: yumrepos, repos: [opennebula]}
+    - one_kvmnode

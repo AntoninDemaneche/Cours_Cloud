@@ -1,0 +1,15 @@
+sed -i "s/SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config
+echo '## SELINUX désactivé ##'
+
+systemctl stop firewalld
+systemctl disable firewalld
+echo '## firewall desactivé ##'
+
+cp /data/hosts /etc/hosts
+echo '## Fichier /etc/hosts changé ## '
+
+yum install bridge-utils -y
+
+cp /data/ifcfg-eth1 /etc/sysconfig/network-scripts/ifcfg-eth1
+cp /data/ifcfg-eth2 /etc/sysconfig/network-scripts/ifcfg-eth2
+systemctl restart network

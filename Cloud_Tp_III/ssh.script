@@ -1,0 +1,3 @@
+echo "### SSH Script ###"
+ssh-copy-id oneadmin@vm.frontend.tp3 -i /var/lib/one/.ssh/id_rsa.pub -f
+ssh-copy-id oneadmin@vm.kvm1.tp3 -i /var/lib/one/.ssh/id_rsa.pub -f
